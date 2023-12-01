@@ -12,7 +12,7 @@ class Cell {
     this.height = this.effect.cellHeight;
   }
   draw(context) {
-    context.fillRect(this.x, this.y, this.width, this.height);
+    context.strokeRect(this.x, this.y, this.width, this.height);
   }
 }
 
@@ -23,11 +23,22 @@ class Effect {
     this.height = this.canvas.height;
     this.cellWidth = this.width / 35;
     this.cellHeight = this.height / 55;
-    this.cell = new Cell(this, 0, 0);
-    console.log(this.cell);
+    this.imageGrid = [];
+    this.createGrid();
+    console.log(this.imageGrid);
   }
+  createGrid() {
+    for (let y = 0; y < this.height; y += this.cellHeight) {
+      for (let x = 0; x < this.width; x += this.cellWidth) {
+        this.imageGrid.push(new Cell(this, x, y));
+      }
+    }
+  }
+
   render(context) {
-    this.cell.draw(context);
+    this.imageGrid.forEach((cell) => {
+      cell.draw(context);
+    });
   }
 }
 
